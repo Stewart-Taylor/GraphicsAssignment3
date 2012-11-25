@@ -217,11 +217,12 @@ void Ocean::drawVertex(int i , int j)
 {
 	
 
-	  glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
+	glColor3f( 1.0 ,1.0, 1.0 ); 
+	glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
 
 		  glNormal3fv(&normals[i+1][j][0]);  glTexCoord2f(1,0); glVertex3f(cd[i+1],cd[j],-heightPoints[i+1][j]);
 
-		  glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-heightPoints[i+1][j+1]);
+	  glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-heightPoints[i+1][j+1]);
 
 	  glNormal3fv(&normals[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cd[i],cd[j+1],-heightPoints[i][j+1]);
 }

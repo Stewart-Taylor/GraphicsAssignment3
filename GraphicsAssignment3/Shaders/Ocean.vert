@@ -6,8 +6,10 @@ varying vec3 lightDir,normal;
 void main()
 {
 
+	vec3 lighPos = vec3(10,10,0);
+
 	normal = normalize(gl_NormalMatrix * gl_Normal);
-	lightDir = normalize(vec3(gl_LightSource[0].position));
+	lightDir = normalize(lighPos);
 	
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	
@@ -16,10 +18,10 @@ void main()
 	
 	vec4 position = gl_Vertex;
 	vec2 point = vec2(position.x,position.y);
-    float val1 = 0.1 * sin(position.y+ timer)  ;
-	float val2 = 0.3 * sin(position.x+ (timer*2.0))  ;
-	//float val3 = 0.5f *sin(rand(point) + timer ) ;
-    position.z = val1 + val2  + 0.4;
+    float val1 = 0.4 * sin(position.y+ timer)  ;
+	float val2 = 0.6 * sin(position.x+ (timer*2.0))  ;
+	float val3 = 0.9f *sin(position.z+ (timer*2.0))  ;
+    position.z = (val1 + val2  + val3) * 0.4;
 
    
    
