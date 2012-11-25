@@ -25,5 +25,7 @@ private:
 	GLfloat timer;
 	GLuint vertexShaderProgram;
 	GLuint vertexShader;
+	GLuint fragShader;
 	GLint myUniformLocation;
+	GLint myUniformLocationTex;
 };

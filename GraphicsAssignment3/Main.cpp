@@ -76,7 +76,7 @@ void setShaders() {
 
 	ocean.setShader();
 	
-	char *vs = NULL,*fs = NULL,*fs2 = NULL;
+/*	char *vs = NULL,*fs = NULL,*fs2 = NULL;
 
 	v = glCreateShader(GL_VERTEX_SHADER);
 	f = glCreateShader(GL_FRAGMENT_SHADER);
@@ -107,12 +107,14 @@ void setShaders() {
 	glAttachShader(p,v);
 
 	glLinkProgram(p);
-	glUseProgram(p);
+	//glUseProgram(p);
 
 
 	 myUniformLocation = glGetUniformLocation(p, "referenceTex");
 	 myUniformLocation2 = glGetUniformLocation(p, "pixelWidth");
 	 myUniformLocation3 = glGetUniformLocation(p, "pixelHeight");
+
+	 */
 }
 
 
@@ -133,15 +135,14 @@ void displayFog(void)
 
 void display (void)
 {
+	glUseProgram(p);
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
 
 	displayFog();
 	timer += 0.001f;
-	glUniform1f(myUniformLocation, 1);
-	glUniform1f(myUniformLocation2, 1);
-	glUniform1f(myUniformLocation3, 1);
+	
 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
@@ -197,7 +198,7 @@ void mouseUpdate(int x , int y)
 
 void idle(void)
 {
-//	ocean.update();
+	ocean.update();
 	glutPostRedisplay();
 }
 

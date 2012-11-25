@@ -51,28 +51,33 @@ void Ocean::setShader()
 	char *vs = NULL,*fs = NULL,*fs2 = NULL;
 
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
+	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 
 	vs = ShaderLoader::textFileRead("Shaders/Ocean.vert");
-
+	fs = ShaderLoader::textFileRead("Shaders/Ocean.frag");
 
 	const char * vv = vs;
+	const char * ff = fs;
 
 	glShaderSource(vertexShader, 1, &vv,NULL);
+	glShaderSource(fragShader, 1, &ff,NULL);
 
 
 	free(vs);
 	free(fs);
 
 	glCompileShader(vertexShader);
+	glCompileShader(fragShader);
 
 	vertexShaderProgram = glCreateProgram();
 	glAttachShader(vertexShaderProgram,vertexShader);
+	glAttachShader(vertexShaderProgram,fragShader);
 
 	glLinkProgram(vertexShaderProgram);
+	myUniformLocation = glGetUniformLocation(vertexShaderProgram, "time");
+	myUniformLocationTex = glGetUniformLocation(vertexShaderProgram, "tex");
 
-	 myUniformLocation = glGetUniformLocation(vertexShaderProgram, "referenceTex");
 }
 
 Ocean::~Ocean(void)
@@ -161,7 +166,15 @@ double Ocean::distanceT(double dX0, double dY0, double dX1, double dY1)
 
 void Ocean::display(void)
 {
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
+	glEnable(GL_TEXTURE_2D); 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
+	glBindTexture(GL_TEXTURE_2D, texName);
+
 	glUseProgram(vertexShaderProgram);
+	glUniform1f(myUniformLocation, timer);
+	glUniform1i(texName, 0);
 
 	int size = 256;
 
@@ -170,9 +183,9 @@ void Ocean::display(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_TEXTURE_2D); 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
-	glBindTexture(GL_TEXTURE_2D, texName);
+//	glEnable(GL_TEXTURE_2D); 
+//	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
+//	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -202,26 +215,22 @@ void Ocean::display(void)
 
 void Ocean::drawVertex(int i , int j)
 {
-	GLfloat color[4] = {0,0,0 , 0};
+	
 
-	getColor(color , i,j);
-	glColor4f(color[0], color[1], color[2] , color[3]);	  glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
+	  glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
 
-	getColor(color , i+1,j);
-	glColor4f(color[0], color[1], color[2], color[3]);	  glNormal3fv(&normals[i+1][j][0]);  glTexCoord2f(1,0); glVertex3f(cd[i+1],cd[j],-heightPoints[i+1][j]);
+		  glNormal3fv(&normals[i+1][j][0]);  glTexCoord2f(1,0); glVertex3f(cd[i+1],cd[j],-heightPoints[i+1][j]);
 
-	getColor(color , i+1,j+1);
-	glColor4f(color[0], color[1], color[2], color[3]);	  glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-heightPoints[i+1][j+1]);
+		  glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-heightPoints[i+1][j+1]);
 
-	getColor(color , i, j+1);
-	glColor4f(color[0], color[1], color[2], color[3]);  glNormal3fv(&normals[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cd[i],cd[j+1],-heightPoints[i][j+1]);
+	  glNormal3fv(&normals[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cd[i],cd[j+1],-heightPoints[i][j+1]);
 }
 
 
 void Ocean::update()
 {
-	timer+= 0.008f;
-
+	timer+= 80;
+/*
 	for (int i = 0; i <= 256; i++)
 	{
 		for (int j = 0; j <= 256; j++)
@@ -233,6 +242,9 @@ void Ocean::update()
 			heightPoints[i][j]  =val1 + val2 + val3 - 0.4f ;
 		}
 	}
+
+	calculateNormals(256);
+	*/
 
 	calculateNormals(256);
 }
