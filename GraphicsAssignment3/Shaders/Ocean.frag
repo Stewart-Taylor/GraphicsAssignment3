@@ -49,7 +49,42 @@ vec4 col =  vec4(ct * cf , at * af );
 	//float randV = rand(point);
 	float alphaV =  0.6; //clamp(randV ,0.6 , 0.7);
 	
+float depth = gl_FragCoord.z / gl_FragCoord.w ;
+	vec4 colFinal = col;
+	 if ( ( texel.r < 0.8) && ( texel.b < 0.8)  )
+	{
+		colFinal = vec4(col.x , col.y , col.z, alphaV);
+		
+		
+		float d = depth/500;
+		float r =  1.0-d;
+		float b = d;
+		
+		if( b <0.3)
+		{
+		b = 0.3;
+		}
+		
+		
+	
+		
+		colFinal = vec4(colFinal.x , colFinal.y , b, r);
+	}
+	else 
+	{
+		
+		colFinal = vec4(0.8 , 0.9, 0.94, 1.0);
+	}
+	
+	
+	
 
-	gl_FragColor = vec4(col.x , col.y , col.z, alphaV);
+	
+	
+	
+	
+		gl_FragColor = colFinal;
+	
+	
 	//gl_FragColor = vec4(1.0,0.0,0.0,1.0);
 }

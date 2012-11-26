@@ -14,14 +14,14 @@ void main()
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	
 	
-	float timer = time * 0.001;
+	float timer = time * 0.01;
 	
 	vec4 position = gl_Vertex;
 	vec2 point = vec2(position.x,position.y);
-    float val1 = 0.4 * sin(position.y+ timer)  ;
-	float val2 = 0.6 * sin(position.x+ (timer*2.0))  ;
-	float val3 = 0.9f *sin(position.z+ (timer*2.0))  ;
-    position.z = (val1 + val2  + val3) * 0.4;
+    float val1 = 3.4 * sin(position.y+ timer)  ;
+	float val2 = 4.6 * sin(position.x+ (timer))  ;
+	float val3 = 2.9f *sin(position.z+ (timer/2.0))  ;
+    position.z = (val1 + val2  + val3) * 0.2;
 
    
    

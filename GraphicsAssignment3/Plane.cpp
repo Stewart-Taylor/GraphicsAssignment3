@@ -12,7 +12,7 @@
 Plane::Plane(void)
 {
 	xPosition = 0;
-	yPosition = -1.2;
+	yPosition = -8.2;
 	zPosition = 0;
 	scale = 800;
 }

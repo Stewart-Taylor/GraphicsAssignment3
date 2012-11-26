@@ -105,9 +105,9 @@ void Camera::keyboardControl(unsigned char key, int x, int y)
 		GLfloat yRotationRadius;
 		yRotationRadius = (yRotation / 180 * M_PI); 
 		xRoationRadius = (xRotation / 180 * M_PI); 
-		xPosition += GLfloat(sin(yRotationRadius));
-		zPosition -= GLfloat(cos(yRotationRadius));
-		yPosition -= GLfloat(sin(xRoationRadius));
+		xPosition += GLfloat(sin(yRotationRadius)) * 2;
+		zPosition -= GLfloat(cos(yRotationRadius))* 2;
+		yPosition -= GLfloat(sin(xRoationRadius))* 2;
     }
 
     if (key=='s')// Move back in direction you are looking

@@ -4,7 +4,7 @@
  * This class generates Procedurally Generated Ocean 
  * It also simulates the oceans animation
  * 
- * Last Updated: 09/11/2012
+ * Last Updated: 26/11/2012
 */
 #include <glew.h>
 #include "Ocean.h"
@@ -15,10 +15,10 @@
 #include "ShaderLoader.h"
 #include <time.h>
   
-GLfloat heightPoints[256+1][256+1];
-GLfloat seascO[256+1][256+1];
-GLfloat cd[256+1];
-GLfloat normals[256+1][256+1][3];
+GLfloat heightPoints[161+1][161+1];
+GLfloat seascO[161+1][161+1];
+GLfloat cd[161+1];
+GLfloat normals[161+1][161+1][3];
 
 
 
@@ -40,7 +40,7 @@ Ocean::Ocean(int size)
 		cd[x] = x;
 	}
 
-	texName = TextureLoader::loadTexture("Textures\\ocean.bmp");
+	texName = TextureLoader::loadTexture("Textures\\water3.bmp");
 
 	genMap(size);
 }
@@ -176,7 +176,7 @@ void Ocean::display(void)
 	glUniform1f(myUniformLocation, timer);
 	glUniform1i(texName, 0);
 
-	int size = 256;
+	int size = 161;
 
 	glPushMatrix(); 
 
@@ -230,7 +230,7 @@ void Ocean::drawVertex(int i , int j)
 
 void Ocean::update()
 {
-	timer+= 80;
+	timer+= 1;
 /*
 	for (int i = 0; i <= 256; i++)
 	{
@@ -247,5 +247,5 @@ void Ocean::update()
 	calculateNormals(256);
 	*/
 
-	calculateNormals(256);
+	calculateNormals(161);
 }

@@ -53,7 +53,7 @@ void setObjects(void)
 {
 	skybox =  SkyBox();
 	plane = Plane();
-	ocean = Ocean(256);
+	ocean = Ocean(161);
 	timer = 0;
 	generateMap();
 }
@@ -121,8 +121,8 @@ void setShaders() {
 
 void displayFog(void)
 {
-	GLfloat density = 0.002f;
-	GLfloat fogColor[4] = {0.70f, 0.7f, 0.7f, 1.0f};
+	GLfloat density = 0.0000000001f;
+	GLfloat fogColor[4] = {0.9f, 0.9f, 0.9f, 0.3f};
 	glFogi (GL_FOG_MODE, GL_LINEAR);
 	glFogfv (GL_FOG_COLOR, fogColor);
 	glFogf (GL_FOG_DENSITY, density);
@@ -140,7 +140,7 @@ void display (void)
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
 
-	displayFog();
+	//displayFog();
 	timer += 0.001f;
 	
 
