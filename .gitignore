@@ -9,6 +9,7 @@ bin/
 tmp/
 *.tmp
 *.bmp
+*.3ds
 *.bak
 *.swp
 *~.nib
