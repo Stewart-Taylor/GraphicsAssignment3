@@ -123,6 +123,7 @@ void Ship::GetFaces()
 // Render the model using Vertex Buffer Objects
 void Ship::Draw() 
 {
+	glColor3f( 1.0 ,1.0, 1.0 ); 
 	glEnable(GL_LIGHTING);
 	//glEnable(GL_COLOR_MATERIAL);
 	glPushMatrix(); 

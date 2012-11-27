@@ -14,9 +14,6 @@ public:
 private:
 	void calculateNormals(int size);
 	void drawVertex(int x , int y);
-	void getColor(GLfloat color[4], int x , int y);
-	void calculateColors(int size);
-	double distanceT(double dX0, double dY0, double dX1, double dY1);
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
