@@ -4,11 +4,12 @@
  * This class is used to load in a texture 
  * and provide an ID reference  to it.
  * Added Mipmap support
+ * Updated to Support Clamped Textures
  *
  * Reference : Topic_5_Texture /box_texture.c on Share Drive
  * Extracted and heavily modified a small section
  *
- * Last Updated: 22/10/2012
+ * Last Updated: 27/11/2012
 */
 
 #include "TextureLoader.h"
@@ -27,8 +28,7 @@ TextureLoader::~TextureLoader(void)
 {
 }
 
-
- GLuint TextureLoader::loadTexture(char* Filename)
+GLuint TextureLoader::loadTexture(char* Filename)
 {
 	GLuint id = 0;
 	AUX_RGBImageRec *texture[1];
@@ -67,9 +67,7 @@ TextureLoader::~TextureLoader(void)
 }
 
 
-
-
-  GLuint TextureLoader::loadTextureClamped(char* Filename)
+GLuint TextureLoader::loadTextureClamped(char* Filename)
 {
 	GLuint id = 0;
 	AUX_RGBImageRec *texture[1];

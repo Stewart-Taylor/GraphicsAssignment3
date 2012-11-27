@@ -9,9 +9,9 @@ public:
 	void display(void);
 private:
 	GLfloat scale;
-	GLuint texLeft;
-	GLuint texMiddle;
-	GLuint texTop;
-	GLuint texInnerRight;
-	GLuint texRight;
+	GLuint textureLeft;
+	GLuint textureMiddle;
+	GLuint textureTop;
+	GLuint textureInnerRight;
+	GLuint textureRight;
 };

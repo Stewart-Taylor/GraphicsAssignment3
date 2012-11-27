@@ -1,9 +1,9 @@
 /*		Plane CLASS
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * Generates a blue plane with graident and surface normals.Updated to simulate basic ocean
+ * Generates a blue plane with graident and surface normals.
  * 
- * Last Updated: 09/10/2012
+ * Last Updated: 26/11/2012
 */
 
 #include "Plane.h"
@@ -17,11 +17,9 @@ Plane::Plane(void)
 	scale = 800;
 }
 
-
 Plane::~Plane(void)
 {
 }
-
 
 void Plane::display(void)
 {

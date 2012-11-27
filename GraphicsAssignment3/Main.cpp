@@ -1,16 +1,20 @@
-/*	Assignment 3
+/*	Graphics Assignment 3
  *	AUTHOR: STEWART TAYLOR
- *	DATE STARTED: 16/11/2012
+ *	DATE STARTED: 24/11/2012
  *------------------------------------
  * This program is part of the Graphics modules third assignment.
  * It demonstrates the use of shaders vertex and fragment 
  * 
  * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 23/11/2012
+ * Last Updated: 27/11/2012
 */
 
 #include <glew.h>
+#include <freeglut.h>
+#include <fstream>
+#include <iostream>
+
 #include "Camera.h"
 #include "Main.h"
 #include "SkyBox.h"
@@ -19,11 +23,6 @@
 #include "ShaderLoader.h"
 #include "TextureLoader.h"
 #include "Ship.h"
-
-#include <freeglut.h>
-#include <fstream>
-#include <iostream>
-
 
 Camera camera = Camera();
 
@@ -45,7 +44,6 @@ GLfloat mat_shininess[] = { shiny };
 GLint myUniformLocation;
 GLint myUniformLocation2;
 GLint myUniformLocation3;
-float timer;
 
 void generateMap()
 {
@@ -54,11 +52,9 @@ void generateMap()
 
 void setObjects(void)
 {
-
 	skybox =  SkyBox();
 	plane = Plane();
 	ocean = Ocean(161);
-	timer = 0;
 	generateMap();
 }
 
@@ -125,20 +121,6 @@ void setShaders() {
 
 
 
-void displayFog(void)
-{
-	GLfloat density = 0.0000000001f;
-	GLfloat fogColor[4] = {0.9f, 0.9f, 0.9f, 0.3f};
-	glFogi (GL_FOG_MODE, GL_LINEAR);
-	glFogfv (GL_FOG_COLOR, fogColor);
-	glFogf (GL_FOG_DENSITY, density);
-	glHint (GL_FOG_HINT, GL_NICEST);
-	glFogf(GL_FOG_START, 100.0f);
-	glFogf(GL_FOG_END, 600.0f); 
-    glEnable(GL_FOG);
-}
-
-
 void display (void)
 {
 	glUseProgram(p);
@@ -146,10 +128,8 @@ void display (void)
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
 
-	//displayFog();
-	timer += 0.001f;
 	
-
+	
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
