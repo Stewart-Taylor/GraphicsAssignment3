@@ -23,6 +23,7 @@
 #include "ShaderLoader.h"
 #include "TextureLoader.h"
 #include "Ship.h"
+#include "SplashManager.h"
 
 Camera camera = Camera();
 
@@ -30,6 +31,7 @@ SkyBox skybox;
 Plane plane;
 Ocean ocean;
 Ship ship =  Ship("Models/Galleon.3ds");
+SplashManager splashManager;
 
 GLuint v,f,f2,p;
 
@@ -55,6 +57,8 @@ void setObjects(void)
 	skybox =  SkyBox();
 	plane = Plane();
 	ocean = Ocean(161);
+
+	splashManager = SplashManager(ship.xPosition + 15 , ship.yPosition + 4 , ship.zPosition + 15); 
 	generateMap();
 }
 
@@ -153,7 +157,11 @@ void display (void)
 
 	glDisable(GL_CULL_FACE);
 
+
+	splashManager.display();
 	ship.Draw();
+
+	
 
 	glutSwapBuffers();
 }
@@ -192,6 +200,10 @@ void idle(void)
 {
 	ocean.update();
 	ship.update();
+	splashManager.emitterX = ship.xPosition + 15;
+	splashManager.emitterY = ship.yPosition + 4;
+	splashManager.emitterZ = ship.zPosition + 15;
+	splashManager.update();
 	glutPostRedisplay();
 }
 

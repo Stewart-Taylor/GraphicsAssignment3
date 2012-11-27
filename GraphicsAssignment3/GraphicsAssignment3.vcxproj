@@ -85,6 +85,7 @@
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SplashManager.h" />
     <ClInclude Include="TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +97,7 @@
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SplashManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

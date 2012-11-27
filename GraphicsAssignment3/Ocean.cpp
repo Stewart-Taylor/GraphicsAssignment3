@@ -22,7 +22,6 @@ GLfloat seascO[161+1][161+1];
 GLfloat cd[161+1];
 GLfloat normals[161+1][161+1][3];
 
-
 Ocean::Ocean()
 {
 

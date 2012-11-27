@@ -119,6 +119,7 @@ void Ship::GetFaces()
 
 void Ship::Draw() 
 {
+//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glColor3f( 1.0 ,1.0, 1.0 ); 
 	glEnable(GL_LIGHTING);
 	glPushMatrix(); 
@@ -161,6 +162,7 @@ void Ship::Draw()
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
 
 void Ship::update(void) 
