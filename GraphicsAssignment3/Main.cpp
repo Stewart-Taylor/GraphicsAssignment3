@@ -18,6 +18,8 @@
 #include "Ocean.h"
 #include "ShaderLoader.h"
 #include "TextureLoader.h"
+#include "Ship.h"
+
 #include <freeglut.h>
 #include <fstream>
 #include <iostream>
@@ -28,6 +30,7 @@ Camera camera = Camera();
 SkyBox skybox;
 Plane plane;
 Ocean ocean;
+Ship ship =  Ship("Models/Galleon.3ds");
 
 GLuint v,f,f2,p;
 
@@ -51,6 +54,7 @@ void generateMap()
 
 void setObjects(void)
 {
+
 	skybox =  SkyBox();
 	plane = Plane();
 	ocean = Ocean(161);
@@ -75,6 +79,8 @@ void init (void)
 void setShaders() {
 
 	ocean.setShader();
+
+	ship.CreateVBO();
 	
 /*	char *vs = NULL,*fs = NULL,*fs2 = NULL;
 
@@ -159,9 +165,15 @@ void display (void)
 	glEnable(GL_CULL_FACE);
 
 	plane.display();
+
+
 	ocean.display();
 
+	
+
 	glDisable(GL_CULL_FACE);
+
+	ship.Draw();
 
 	glutSwapBuffers();
 }
@@ -199,6 +211,7 @@ void mouseUpdate(int x , int y)
 void idle(void)
 {
 	ocean.update();
+	ship.update();
 	glutPostRedisplay();
 }
 

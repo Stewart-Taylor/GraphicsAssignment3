@@ -44,7 +44,7 @@ void SkyBox::display(void)
 
 	glMatrixMode(GL_MODELVIEW);
 
-
+	glTranslated(0 ,90.0 ,0);
 	glScaled(scale ,scale ,scale);
 
 

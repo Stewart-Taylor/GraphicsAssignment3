@@ -50,13 +50,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Stewart\Documents\OpenGL\include;C:\Users\Stewart\Documents\OpenGL\GLEW\include\GL;C:\Users\Stewart\Documents\OpenGL\glaux;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Stewart\Documents\OpenGL\include;C:\Users\Stewart\Documents\OpenGL\GLEW\include\GL;C:\Users\Stewart\Documents\OpenGL\glaux;C:\Users\Stewart\Documents\OpenGL\lib3ds\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Stewart\Documents\OpenGL\lib;C:\Users\Stewart\Documents\OpenGL\GLEW\lib;C:\Users\Stewart\Documents\OpenGL\glaux;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glaux.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Stewart\Documents\OpenGL\lib;C:\Users\Stewart\Documents\OpenGL\GLEW\lib;C:\Users\Stewart\Documents\OpenGL\glaux;C:\Users\Stewart\Documents\OpenGL\lib3ds\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glaux.lib;freeglut.lib;glew32.lib;lib3ds.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -83,6 +83,7 @@
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="TextureLoader.h" />
   </ItemGroup>
@@ -93,6 +94,7 @@
     <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>

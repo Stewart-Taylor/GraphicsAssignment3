@@ -216,7 +216,6 @@ void Ocean::display(void)
 void Ocean::drawVertex(int i , int j)
 {
 	
-
 	glColor3f( 1.0 ,1.0, 1.0 ); 
 	glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
 

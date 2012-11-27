@@ -66,7 +66,7 @@ float depth = gl_FragCoord.z / gl_FragCoord.w ;
 		}
 		
 		
-	
+		
 		
 		colFinal = vec4(colFinal.x , colFinal.y , b, r);
 	}
