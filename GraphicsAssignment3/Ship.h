@@ -7,9 +7,9 @@ class Ship
 {
 	public:
 		Ship(char* filename);
-		virtual void Draw();
-		virtual void CreateVBO();
-		virtual ~Ship();
+		~Ship();
+		void Draw();
+		void CreateVBO();
 		void update(void);
 	private:
 		void GetFaces();
@@ -20,6 +20,6 @@ class Ship
 		GLfloat xPosition, yPosition, zPosition;
 		GLfloat xAngle, yAngle, zAngle;
 		GLfloat scale;
-		float timer;
+		GLfloat timer;
 };
 
