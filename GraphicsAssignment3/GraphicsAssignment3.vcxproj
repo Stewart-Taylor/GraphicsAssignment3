@@ -81,6 +81,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
     <ClInclude Include="Ocean.h" />
+    <ClInclude Include="OverlayPlane.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="Ship.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />
     <ClCompile Include="Ocean.cpp" />
+    <ClCompile Include="OverlayPlane.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="Ship.cpp" />

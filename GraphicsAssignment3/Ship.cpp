@@ -162,7 +162,7 @@ void Ship::Draw()
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
 
 void Ship::update(void) 

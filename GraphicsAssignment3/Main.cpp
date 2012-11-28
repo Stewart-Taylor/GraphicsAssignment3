@@ -24,6 +24,7 @@
 #include "TextureLoader.h"
 #include "Ship.h"
 #include "SplashManager.h"
+#include "OverlayPlane.h"
 
 Camera camera = Camera();
 
@@ -32,6 +33,7 @@ Plane plane;
 Ocean ocean;
 Ship ship =  Ship("Models/Galleon.3ds");
 SplashManager splashManager;
+OverlayPlane overlay;
 
 GLuint v,f,f2,p;
 
@@ -47,6 +49,9 @@ GLint myUniformLocation;
 GLint myUniformLocation2;
 GLint myUniformLocation3;
 
+float resX;
+float resY;
+
 void generateMap()
 {
 	ocean.genMap(64);
@@ -57,6 +62,7 @@ void setObjects(void)
 	skybox =  SkyBox();
 	plane = Plane();
 	ocean = Ocean(161);
+	overlay = OverlayPlane();
 
 	splashManager = SplashManager(ship.xPosition + 15 , ship.yPosition + 4 , ship.zPosition + 15); 
 	generateMap();
@@ -79,6 +85,7 @@ void init (void)
 void setShaders() {
 
 	ocean.setShader();
+	overlay.setShader();
 
 	ship.CreateVBO();
 	
@@ -131,8 +138,6 @@ void display (void)
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
-
-	
 	
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
@@ -159,20 +164,30 @@ void display (void)
 
 
 	splashManager.display();
+	
 	ship.Draw();
 
-	
+	overlay.display(resX , resY);
 
 	glutSwapBuffers();
 }
 
 void reshape (int w, int h)
 {
-    glViewport (0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
-    glMatrixMode (GL_PROJECTION); //set the matrix to projection
-    glLoadIdentity ();
-    gluPerspective (60, (GLfloat)w / (GLfloat)h, 0.1, 1600.0); //set the perspective (angle of sight, width, height, , depth)
-    glMatrixMode (GL_MODELVIEW); //set the matrix back to model
+
+	if( ( w > 400) && ( h > 400)) // Allows min window size
+	{
+
+		glViewport (0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
+		glMatrixMode (GL_PROJECTION); //set the matrix to projection
+		glLoadIdentity ();
+		gluPerspective (60, (GLfloat)w / (GLfloat)h, 0.1, 1600.0); //set the perspective (angle of sight, width, height, , depth)
+		glMatrixMode (GL_MODELVIEW); //set the matrix back to model
+
+		resX = w;
+		resY = w;
+
+	}
 }
 
 void keyboard (unsigned char key, int x, int y)
@@ -219,9 +234,6 @@ void printInfo()
 	std::cout << " Q,E - Look Left/Right" << std::endl;
 	std::cout << " R,F - Move Camera Up/Down " << std::endl;
 	std::cout << " Z,X - Tilt Camera Up/Down" << std::endl;
-	std::cout << std::endl;
-	std::cout << "Main " << std::endl;
-	std::cout << " G - Generate Island" << std::endl;
 	std::cout << std::endl;
 	std::cout << "LIGHT " << std::endl;
 	std::cout << " U,I,K,L,J - Move Light Source" << std::endl;

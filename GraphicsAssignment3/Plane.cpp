@@ -31,7 +31,7 @@ void Plane::display(void)
 	glScaled(scale ,scale ,scale);
 
 	glBegin(GL_POLYGON);
-	glColor3f( 0.0 ,0.58, 0.5 );	
+	glColor3f( 1.0 ,0.98, 0.9 );	
 	glVertex3f(  0.5, 0.0, -0.5 );      
 	glVertex3f(  0.5,  0.0, 0.5 );     
 	glVertex3f( -0.5,  0.0, 0.5 );      
