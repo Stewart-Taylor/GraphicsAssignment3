@@ -14,6 +14,4 @@ public:
 private:
 	void createParticle(int i);
 	GLuint texName;
-	GLfloat windX;
-	GLfloat windZ;
 };

@@ -4,7 +4,7 @@
  * This class is used to generate the smoke from a volcano
  * It also simulates wind
  *
- * Last Updated: 09/11/2012
+ * Last Updated: 28/11/2012
 */
 
 #include "SplashManager.h"
@@ -29,7 +29,7 @@ struct Particle
 };
 
 
-Particle particles[1000];
+Particle particles[400];
 
 SplashManager::SplashManager(void)
 {
@@ -42,13 +42,13 @@ SplashManager::SplashManager(int x , int y , int z)
 	emitterY = y;
 	emitterZ = z;
 
-	for(int i = 0 ; i < 1000 ; i++)
+	for(int i = 0 ; i < 400 ; i++)
 	{
 		createParticle(i);
 		particles[i].timer = (rand()%1590);
 	}
 
-	texName = TextureLoader::loadTexture("Textures\\smoke.bmp");
+	texName = TextureLoader::loadTexture("Textures\\splash.bmp");
 }
 
 SplashManager::~SplashManager(void)
@@ -91,9 +91,9 @@ void SplashManager::createParticle(int i)
 	 particles[i].color[1] = 0;
 	 particles[i].color[2] = 0;
 	 particles[i].color[3] = 1;
-	 particles[i].xAngle =  80 ; //(float)rand()/((float)RAND_MAX/360);
-	 particles[i].yAngle = 10; //(float)rand()/((float)RAND_MAX/360);
-	 particles[i].zAngle = 0; //(float)rand()/((float)RAND_MAX/360);
+	 particles[i].xAngle =  90 ; 
+	 particles[i].yAngle = 0; 
+	 particles[i].zAngle = 0; 
 }
 
 
@@ -115,7 +115,7 @@ void SplashManager::display(void)
 	glScaled(1 ,1 ,1);
 
 
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<400 ;i++)
 	{
 		glPushMatrix(); 
 
@@ -150,10 +150,7 @@ void SplashManager::reset(int x , int y , int z)
 	emitterY = y;
 	emitterZ = z;
 
-	windX = (float)rand()/((float)RAND_MAX/0.1f) - (float)rand()/((float)RAND_MAX/0.1f);
-	windZ = (float)rand()/((float)RAND_MAX/0.1f) - (float)rand()/((float)RAND_MAX/0.1f);
-
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<400 ;i++)
 	{
 		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		particles[i].y = emitterY ;
@@ -165,7 +162,7 @@ void SplashManager::reset(int x , int y , int z)
 
 void SplashManager::update(void)
 {
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<400 ;i++)
 	{
 		particles[i].color[0] = 1.0;
 		particles[i].color[1] =  1.0;
