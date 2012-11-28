@@ -45,7 +45,7 @@ SplashManager::SplashManager(int x , int y , int z)
 	for(int i = 0 ; i < 1000 ; i++)
 	{
 		createParticle(i);
-		particles[i].timer = (rand()%990);
+		particles[i].timer = (rand()%1590);
 	}
 
 	texName = TextureLoader::loadTexture("Textures\\smoke.bmp");
@@ -63,7 +63,7 @@ void SplashManager::createParticle(int i)
 		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		particles[i].x += 6;
 
-		particles[i].direction[0] = (float)rand()/((float)RAND_MAX/0.02f) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
+		particles[i].direction[0] = (float)rand()/((float)RAND_MAX/0.006f) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
 		particles[i].direction[1] = -0.001f ; //(float)rand()/((float)RAND_MAX/0.02f) ;
 		particles[i].direction[2] =  0 ;(float)rand()/((float)RAND_MAX/0.2f) - (float)rand()/((float)RAND_MAX/0.2f) ;
 	
@@ -73,7 +73,7 @@ void SplashManager::createParticle(int i)
 		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		particles[i].x -= 6;
 
-		particles[i].direction[0] = -( (float)rand()/((float)RAND_MAX/0.02f)) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
+		particles[i].direction[0] = -( (float)rand()/((float)RAND_MAX/0.006f)) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
 		particles[i].direction[1] = -0.001f ; //(float)rand()/((float)RAND_MAX/0.02f) ;
 		particles[i].direction[2] =  0 ;(float)rand()/((float)RAND_MAX/0.2f) - (float)rand()/((float)RAND_MAX/0.2f) ;
 
@@ -83,7 +83,7 @@ void SplashManager::createParticle(int i)
 	particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/20) - (float)rand()/((float)RAND_MAX/20) ;
 
 	particles[i].timer = (rand()%100); 
-	particles[i].limit = 900;
+	particles[i].limit = 1600;
 	 
 	 particles[i].scale = (float)rand()/((float)RAND_MAX/2.2f) ;
 	 particles[i].active = true;
@@ -175,19 +175,19 @@ void SplashManager::update(void)
 
 		if( particles[i].timer < particles[i].limit)
 		{
-			
-
+			float perc = particles[i].timer / particles[i].limit;
 		
 			particles[i].x += particles[i].direction[0];
 			particles[i].y += particles[i].direction[1];
 			particles[i].z += particles[i].direction[2];
 
 			
-			particles[i].scale -= 0.001f;
+			particles[i].scale += 0.001f;
 
-			particles[i].color[0] = 1.0;
-			particles[i].color[1] =  1.0;
-			particles[i].color[2] = 1.0;
+			particles[i].color[0] = (1.0 -perc);
+			particles[i].color[1] = (1.0 -perc);
+			particles[i].color[2] = (1.0 -perc);
+			particles[i].color[3] = (1.0 -perc);
 		}
 		else
 		{
