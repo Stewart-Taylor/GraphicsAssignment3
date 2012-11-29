@@ -5,7 +5,7 @@
  * by manipulating  the viewport. 
  * It also provides controls for the camera manipulation.
  * 
- * Last Updated: 22/10/2012
+ * Last Updated: 29/11/2012
 */
 
 #define _USE_MATH_DEFINES // Allows me to use PI constant
@@ -21,8 +21,8 @@
 GLfloat xPosition = 2.312;
 GLfloat yPosition = 13.4;
 GLfloat zPosition = 16.97;
-GLfloat xRotation = 29;
-GLfloat yRotation = 0;
+GLfloat xRotation = 25;
+GLfloat yRotation = -20;
 GLfloat angle =0.0;
 
 GLfloat radius = 10.0f; // This is used to allow the camera to rotate around a point slightly in front of it. Looks Smoother.
@@ -34,6 +34,7 @@ GLfloat lastY;
 
 Camera::Camera(void)
 {
+
 }
 
 Camera::~Camera(void)

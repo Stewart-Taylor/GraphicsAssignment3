@@ -24,6 +24,7 @@
 #include "TextureLoader.h"
 #include "Ship.h"
 #include "SplashManager.h"
+#include "ShadowHelper.h"
 #include "OverlayPlane.h"
 
 Camera camera = Camera();
@@ -40,7 +41,7 @@ GLuint v,f,f2,p;
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
-GLfloat light_position[] = { 56.0 , 20.0 ,9.0 , 1.0};
+GLfloat light_position[] = { 28.0 , -106.0 ,-31.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
@@ -88,7 +89,7 @@ void setShaders() {
 
 	ocean.setShader();
 	overlay.setShader();
-
+	ship.setShader();
 	ship.CreateVBO();
 	
 /*	char *vs = NULL,*fs = NULL,*fs2 = NULL;
@@ -132,6 +133,37 @@ void setShaders() {
 	 */
 }
 
+void drawShadows()
+{
+	GLfloat shadow_proj[16];
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glPushMatrix();
+    GLfloat plane_eq[] = {0.0, -8.2 , 0.0, 0.0};
+	ShadowHelper::shadow_matrix(light_position,plane_eq,shadow_proj);
+	glMultMatrixf(shadow_proj);
+
+	
+//	ship.DrawRef();
+	ship.DrawShadow();
+	//uranusPole.displayShadow();  
+	//saturnPole.displayShadow();
+	//jupiterPole.displayShadow();
+	//marsPole.displayShadow();
+	//earthPole.displayShadow();
+	//venusPole.displayShadow();
+	//mercuryPole.displayShadow();
+
+	glPopMatrix();
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+}
 
 
 void display (void)
@@ -164,7 +196,7 @@ void display (void)
 
 	glDisable(GL_CULL_FACE);
 
-
+	drawShadows();
 	splashManager.display();
 	
 	ship.Draw();

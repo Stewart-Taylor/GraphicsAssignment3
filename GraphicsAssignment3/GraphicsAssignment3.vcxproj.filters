@@ -48,6 +48,12 @@
     <ClInclude Include="OverlayPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CannonManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -81,6 +87,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OverlayPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

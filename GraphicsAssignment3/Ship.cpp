@@ -20,17 +20,18 @@
 
 #include "Ship.h"
 #include "TextureLoader.h"
-
+#include "ShaderLoader.h"
 
 Ship::Ship(char* filename)
 {
 	xPosition = 0;
 	yPosition = 0;
-	zPosition = 0;
+	zPosition = -40;
 	xAngle = -90;
 	yAngle = 0;
 	zAngle = 0;
 	scale = 1;
+	timer = 0;
 
 	m_TotalFaces = 0;
 	m_model = lib3ds_file_load(filename);
@@ -45,6 +46,33 @@ Ship::~Ship()
 	
 }
 
+
+
+void Ship::setShader(void)
+{
+	char *vs = NULL,*fs = NULL,*fs2 = NULL;
+
+	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	fs = ShaderLoader::textFileRead("Shaders/water.frag");
+
+
+	const char * ff = fs;
+
+	glShaderSource(fragShader, 1, &ff,NULL);
+
+	free(vs);
+	free(fs);
+
+	glCompileShader(fragShader);
+
+	vertexShaderProgram = glCreateProgram();
+	glAttachShader(vertexShaderProgram,fragShader);
+
+	glLinkProgram(vertexShaderProgram);
+	myUniformLocation = glGetUniformLocation(vertexShaderProgram, "timer");
+	myUniformLocation2= glGetUniformLocation(vertexShaderProgram, "tex");
+}
 
 void Ship::CreateVBO()
 {
@@ -100,6 +128,7 @@ void Ship::CreateVBO()
 	m_model = NULL;
 
 	texName = TextureLoader::loadTexture("Textures\\Galleon.bmp");
+	texName2 = TextureLoader::loadTexture("Textures\\water3.bmp");
 }
 
 // Counts the total number of faces this model has
@@ -119,6 +148,8 @@ void Ship::GetFaces()
 
 void Ship::Draw() 
 {
+
+
 //	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glColor3f( 1.0 ,1.0, 1.0 ); 
 	glEnable(GL_LIGHTING);
@@ -164,6 +195,120 @@ void Ship::Draw()
 	glDisable(GL_TEXTURE_2D);
 	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
+
+
+
+
+void Ship::DrawRef() 
+{
+
+	glUseProgram(vertexShaderProgram);
+	glUniform1f(myUniformLocation, timer);
+	glUniform1i(texName2, 0);
+
+
+		glEnable(GL_BLEND);
+//	glBlendFunc(GL_ONE, GL_ONE);
+
+//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+	glColor4f(0.7,0.7,1.0,0.1);	
+//	glEnable(GL_LIGHTING);
+	glPushMatrix(); 
+
+	glEnable(GL_TEXTURE_2D); 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	glBindTexture(GL_TEXTURE_2D, texName);
+
+	glTranslated(xPosition ,yPosition ,zPosition);
+	glRotatef(180, 1.0, 0.0, 0.0);
+	glRotatef(yAngle, 0.0, 1.0, 0.0);
+	glRotatef(180, 0.0, 0.0, 1.0);
+	glTranslated(0,0 ,0);
+	glScaled(scale ,scale ,scale);
+
+	assert(m_TotalFaces != 0);
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+	
+	// Bind Buffers
+	glBindBuffer(GL_ARRAY_BUFFER, m_NormalVBO);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_TexCoordVBO);    
+    glTexCoordPointer(2, GL_FLOAT, 0, NULL); 
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	// Render the triangles
+	glDrawArrays(GL_TRIANGLES, 0, m_TotalFaces * 3);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
+
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+	glUseProgram(0);
+}
+
+
+
+void Ship::DrawShadow() 
+{
+//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+	glColor4f(0.1,0.1,0.1,0.1);	
+//	glEnable(GL_LIGHTING);
+	glPushMatrix(); 
+
+	glEnable(GL_TEXTURE_2D); 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	glBindTexture(GL_TEXTURE_2D, texName);
+
+	glTranslated(xPosition ,yPosition ,zPosition);
+	glRotatef(xAngle, 1.0, 0.0, 0.0);
+	glRotatef(yAngle, 0.0, 1.0, 0.0);
+	glRotatef(zAngle, 0.0, 0.0, 1.0);
+	glTranslated(0,0 ,0);
+	glScaled(scale ,scale ,scale);
+
+	assert(m_TotalFaces != 0);
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+	
+	// Bind Buffers
+	glBindBuffer(GL_ARRAY_BUFFER, m_NormalVBO);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_TexCoordVBO);    
+    glTexCoordPointer(2, GL_FLOAT, 0, NULL); 
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	// Render the triangles
+	glDrawArrays(GL_TRIANGLES, 0, m_TotalFaces * 3);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
+
+	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+}
+
 
 void Ship::update(void) 
 {

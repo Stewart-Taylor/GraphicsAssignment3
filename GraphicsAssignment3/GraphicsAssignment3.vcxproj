@@ -78,12 +78,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CannonManager.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="OverlayPlane.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="ShadowHelper.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SplashManager.h" />
@@ -91,12 +93,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CannonManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />
     <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="OverlayPlane.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="ShadowHelper.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SplashManager.cpp" />
