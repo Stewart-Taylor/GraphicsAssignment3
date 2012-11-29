@@ -9,7 +9,7 @@
  * Reference : Topic_5_Texture /box_texture.c on Share Drive
  * Extracted and heavily modified a small section
  *
- * Last Updated: 27/11/2012
+ * Last Updated: 29/11/2012
 */
 
 #include "TextureLoader.h"

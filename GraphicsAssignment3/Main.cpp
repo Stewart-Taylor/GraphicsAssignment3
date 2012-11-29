@@ -7,7 +7,7 @@
  * 
  * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 27/11/2012
+ * Last Updated: 29/11/2012
 */
 
 #include <glew.h>
@@ -26,15 +26,17 @@
 #include "SplashManager.h"
 #include "ShadowHelper.h"
 #include "OverlayPlane.h"
+#include "CannonManager.h"
 
 Camera camera = Camera();
 
 SkyBox skybox;
 Plane plane;
 Ocean ocean;
-Ship ship =  Ship("Models/Galleon.3ds");
+Ship ship = Ship("Models/Galleon.3ds");
 SplashManager splashManager;
 OverlayPlane overlay;
+CannonManager cannon;
 
 GLuint v,f,f2,p;
 
@@ -53,7 +55,7 @@ GLint myUniformLocation3;
 float resX;
 float resY;
 
-bool overlayVisible = true;
+bool overlayVisible = false;
 
 void generateMap()
 {
@@ -65,6 +67,7 @@ void setObjects(void)
 	skybox =  SkyBox();
 	plane = Plane();
 	ocean = Ocean(161);
+	cannon = CannonManager(0,0,0);
 	overlay = OverlayPlane();
 
 	splashManager = SplashManager(ship.xPosition + 15 , ship.yPosition + 4 , ship.zPosition + 15); 
@@ -198,7 +201,7 @@ void display (void)
 
 	drawShadows();
 	splashManager.display();
-	
+	cannon.display();
 	ship.Draw();
 
 
@@ -258,6 +261,12 @@ void keyboard (unsigned char key, int x, int y)
 	{
 		overlayToggle();
 	}
+
+
+	if (key=='h')
+	{
+		cannon.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+	}
 }
 
 void mouseUpdate(int x , int y)
@@ -273,6 +282,7 @@ void idle(void)
 	splashManager.emitterY = ship.yPosition + 4;
 	splashManager.emitterZ = ship.zPosition + 15;
 	splashManager.update();
+	cannon.update();
 	glutPostRedisplay();
 }
 
