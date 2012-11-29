@@ -52,6 +52,8 @@ GLint myUniformLocation3;
 float resX;
 float resY;
 
+bool overlayVisible = true;
+
 void generateMap()
 {
 	ocean.genMap(64);
@@ -167,7 +169,11 @@ void display (void)
 	
 	ship.Draw();
 
-	overlay.display(resX , resY);
+
+	if(overlayVisible == true)
+	{
+		overlay.display(resX , resY);
+	}
 
 	glutSwapBuffers();
 }
@@ -190,6 +196,19 @@ void reshape (int w, int h)
 	}
 }
 
+
+void overlayToggle()
+{
+	if( overlayVisible == true)
+	{
+		overlayVisible = false;
+	}
+	else
+	{
+		overlayVisible = true;
+	}
+}
+
 void keyboard (unsigned char key, int x, int y)
 {
 	key = tolower(key); // Allows Caps Lock to still work
@@ -203,7 +222,10 @@ void keyboard (unsigned char key, int x, int y)
 	if (key=='u'){light_position[2] += 1;}
 	if (key=='o'){light_position[2] -= 1;}
 
-	if (key=='g'){generateMap();}
+	if (key=='g')
+	{
+		overlayToggle();
+	}
 }
 
 void mouseUpdate(int x , int y)
