@@ -41,7 +41,7 @@ GLuint v,f,f2,p;
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
-GLfloat light_position[] = { 28.0 , -106.0 ,-31.0 , 1.0};
+GLfloat light_position[] = { 28.0 , -406.0 ,-31.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };

@@ -18,6 +18,7 @@
 #include <stdio.h>	
 #include <freeglut.h>
 #include <glaux.h>
+#include <glext.h>
 
 TextureLoader::TextureLoader(void)
 {
@@ -94,8 +95,8 @@ GLuint TextureLoader::loadTextureClamped(char* Filename)
     gluBuild2DMipmaps( GL_TEXTURE_2D, 3, texture[0]->sizeX, texture[0]->sizeY, GL_RGB, GL_UNSIGNED_BYTE, texture[0]->data );
 
    /* Controls texture wrapping  with mip maps*/
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 

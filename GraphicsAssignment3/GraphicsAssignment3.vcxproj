@@ -84,6 +84,7 @@
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="OverlayPlane.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShadowHelper.h" />
     <ClInclude Include="Ship.h" />
@@ -105,6 +106,12 @@
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SplashManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GraphicsAssignment3.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
