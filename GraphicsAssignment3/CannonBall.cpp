@@ -1,21 +1,18 @@
-/*		Sun Class
+/*		CannonBall Class
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * This class is used to generate the sun
- * It has a slight glow to it
+ * This class is used genereates and simulates the flight of a cannonball
+ * It also produces a splash effect when it collides
  *
- * Last Updated: 23/10/2012
+ * Last Updated: 30/11/2012
 */
 
 #define _USE_MATH_DEFINES // Allows me to use PI constant 
 
 #include "CannonBall.h"
 #include "TextureLoader.h"
-
 #include <stdio.h>	
 #include <math.h>
-
-
 
 struct Particle
 {
@@ -29,10 +26,8 @@ struct Particle
 	GLfloat limit;
 	GLfloat direction[3];
 	GLfloat scale;
-	bool active;
 	GLfloat color[4];
 };
-
 
 Particle splashParticles[200];
 
@@ -43,38 +38,20 @@ typedef struct
   double z;
 } Vertex;
 
+
 CannonBall::CannonBall()
 {
 	xPosition = 0;
 	yPosition = 0;
 	zPosition = 0;
-	xAngle = -90;
-	yAngle = 0;
-	zAngle = 0;
 	scale = 1.0;
 
 	texName = TextureLoader::loadTexture("Textures\\splash.bmp");
 }
-
-CannonBall::CannonBall(GLfloat x , GLfloat y , GLfloat z )
-{
-	xPosition = x;
-	yPosition = y;
-	zPosition = z;
-	xAngle = -90;
-	yAngle = 0;
-	zAngle = 0;
-	scale = 1.0;
-
-
-	texName = TextureLoader::loadTexture("Textures\\splash.bmp");
-}
-
 
 CannonBall::~CannonBall(void)
 {
 }
-
 
 
 void CannonBall::createSplash()
@@ -89,16 +66,15 @@ void CannonBall::createSplash()
 
 void CannonBall::createParticle(int i)
 {
-	 splashParticles[i].x = xPosition + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
-	 splashParticles[i].y = yPosition  - 2;
-	 splashParticles[i].z = zPosition + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
+	 splashParticles[i].x = xPosition + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2);
+	 splashParticles[i].y = yPosition;
+	 splashParticles[i].z = zPosition + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2);
 	 splashParticles[i].timer = (rand()%100); 
-	 splashParticles[i].limit = 70;
+	 splashParticles[i].limit = 60;
 	 splashParticles[i].direction[0] = (float)rand()/((float)RAND_MAX/0.08f) - (float)rand()/((float)RAND_MAX/0.08f) ;
 	 splashParticles[i].direction[1] = (float)rand()/((float)RAND_MAX/0.08f)  ;
 	 splashParticles[i].direction[2] = (float)rand()/((float)RAND_MAX/0.08f) - (float)rand()/((float)RAND_MAX/0.08f) ;
-	 splashParticles[i].scale = (float)rand()/((float)RAND_MAX/0.9f) ;
-	 splashParticles[i].active = true;
+	 splashParticles[i].scale  = (float)rand()/((float)RAND_MAX/0.9f) ;
 	 splashParticles[i].xAngle = (float)rand()/((float)RAND_MAX/360);
 	 splashParticles[i].yAngle = (float)rand()/((float)RAND_MAX/360);
 	 splashParticles[i].zAngle = (float)rand()/((float)RAND_MAX/360);
@@ -110,21 +86,18 @@ void CannonBall::createParticle(int i)
 
 void CannonBall::fire(GLfloat x ,GLfloat y, GLfloat z )
 {
-	xPosition = x + 4;
+	xPosition = x +4;
 	yPosition = y +2;
-	zPosition = z  -  3;
-
+	zPosition = z -3;
 
 	xDirection = 0.6;
 	yDirection = 0.1;
-	zDirection = 0.0;
+	zDirection = (float)rand()/((float)RAND_MAX/0.08f) - (float)rand()/((float)RAND_MAX/0.08f) ;
 
 	scale = 0.4;
 	timer = 0;
-	
 	active = true;
 }
-
 
 void CannonBall::display(void)
 {
@@ -147,15 +120,12 @@ void CannonBall::display(void)
 		glTranslated(0,0 ,0);
 		glScaled(scale ,scale ,scale);
 
-		
-
 		GLfloat radius = 1.0;
 		GLuint slices = 70;
 
 		GLuint i,j;
 		GLdouble phi1,phi2,theta, s, t;
 		Vertex e,p;
-
 
 		for (j=0;j <= slices; j++) 
 		{
@@ -196,23 +166,16 @@ void CannonBall::display(void)
 		  }
 		  glEnd();
 	   }
-
 		glPopMatrix();
-
-	
-
 	}
+
 	displaySplash();
 }
-
-
-
 
 void CannonBall::displaySplash(void)
 {
 	if( splashActive == true)
 	{
-
 		glEnable(GL_COLOR_BUFFER_BIT );
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
@@ -224,9 +187,7 @@ void CannonBall::displaySplash(void)
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
 		glBindTexture(GL_TEXTURE_2D, texName);
 
-		
 		glScaled(1.0 ,1.0  ,1.0 );
-
 
 		for(int i = 0; i<200 ;i++)
 		{
@@ -257,7 +218,6 @@ void CannonBall::displaySplash(void)
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
-
 	}
 }
 
@@ -285,7 +245,6 @@ void CannonBall::displayShadow(void)
 		GLuint i,j;
 		GLdouble phi1,phi2,theta, s, t;
 		Vertex e,p;
-
 
 	   for (j=0;j <= n; j++) 
 	   {
@@ -326,76 +285,62 @@ void CannonBall::displayShadow(void)
 	}
 }
 
-
-
-
 void CannonBall::update()
 {
 	if(active == true)
 	{
-
 		xPosition += xDirection;
 		yPosition += yDirection;
 		zPosition += zDirection;
 
-		
-			yDirection -= 0.002;
+		yDirection -= 0.002;
 
-			if( yPosition < 0)
-			{
-				active = false;
-				createSplash();
-				timer = 0;
-			}
-		
-	}
-
-	if( splashActive == true)
-	{
-		timer += 1;
-		
-		
-		updateSplash();
-		
-		if( timer > 1000)
+		if( yPosition < 0)
 		{
-
-			splashActive = false;
+			active = false;
+			createSplash();
+			timer = 0;
 		}
 	}
-	
-}
 
+	updateSplash();
+}
 
 void CannonBall::updateSplash(void)
 {
-		for(int i = 0; i<200 ;i++)
+	if( splashActive == true)
 	{
-		splashParticles[i].timer++;
+		timer += 1;
 
-		if( splashParticles[i].timer < splashParticles[i].limit)
+		if( timer > 1000)
 		{
-			float perc = splashParticles[i].timer / splashParticles[i].limit;
-
-		
-
-			splashParticles[i].x += splashParticles[i].direction[0];
-			splashParticles[i].y += splashParticles[i].direction[1];
-			splashParticles[i].z += splashParticles[i].direction[2];
-
-			splashParticles[i].color[0] = (1-perc);
-			splashParticles[i].color[1] =  (1-perc);
-			splashParticles[i].color[2] = (1-perc);
-			
-			if(perc > 0.5)
-			{
-				splashParticles[i].y -= 0.1;
-			}
-
-			splashParticles[i].color[3] = (1-perc);
-			splashParticles[i].scale += 0.01f;
+			splashActive = false;
 		}
-	
-	}
 
+		for(int i = 0; i<200 ;i++)
+		{
+			splashParticles[i].timer++;
+
+			if( splashParticles[i].timer < splashParticles[i].limit)
+			{
+				float perc = splashParticles[i].timer / splashParticles[i].limit;
+
+				splashParticles[i].x += splashParticles[i].direction[0];
+				splashParticles[i].y += splashParticles[i].direction[1];
+				splashParticles[i].z += splashParticles[i].direction[2];
+
+				splashParticles[i].color[0] = (1-perc);
+				splashParticles[i].color[1] =  (1-perc);
+				splashParticles[i].color[2] = (1-perc);
+			
+				if(perc > 0.5)
+				{
+					splashParticles[i].y -= 0.1;
+				}
+
+				splashParticles[i].color[3] = (1-perc);
+				splashParticles[i].scale += 0.01f;
+			}
+		}
+	}
 }
