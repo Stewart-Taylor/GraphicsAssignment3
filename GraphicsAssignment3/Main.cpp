@@ -268,6 +268,8 @@ void printInfo()
 	std::cout << "Other" << std::endl;
 	std::cout << " G - Enable Overlay Effect" << std::endl;
 	std::cout << " H - Fire Cannon" << std::endl;
+	std::cout << " M - Increase Ocean Amplitude" << std::endl;
+	std::cout << " N - Decrease Ocean Amplitude" << std::endl;
 	std::cout << std::endl;
 }
 

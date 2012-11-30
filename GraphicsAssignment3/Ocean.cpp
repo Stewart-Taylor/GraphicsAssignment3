@@ -46,7 +46,6 @@ Ocean::Ocean(int size)
 	genMap(size);
 }
 
-
 void Ocean::setShader()
 {
 	char *vs = NULL,*fs = NULL,*fs2 = NULL;
