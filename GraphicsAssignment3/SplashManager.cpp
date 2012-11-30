@@ -1,16 +1,14 @@
 /*		Splash Manager
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * This class is used to generate the smoke from a volcano
- * It also simulates wind
+ * This class is used to the waves that run beside the ship
  *
- * Last Updated: 28/11/2012
+ * Last Updated: 30/11/2012
 */
 
 #include "SplashManager.h"
 #include "TextureLoader.h"
 #include <freeglut.h>
-
 
 struct Particle
 {
@@ -28,7 +26,6 @@ struct Particle
 	GLfloat color[4];
 };
 
-
 Particle particles[400];
 
 SplashManager::SplashManager(void)
@@ -45,7 +42,7 @@ SplashManager::SplashManager(int x , int y , int z)
 	for(int i = 0 ; i < 400 ; i++)
 	{
 		createParticle(i);
-		particles[i].timer = (rand()%1590);
+		particles[i].timer = (rand()%1190);
 	}
 
 	texName = TextureLoader::loadTexture("Textures\\splash.bmp");
@@ -57,30 +54,27 @@ SplashManager::~SplashManager(void)
 
 void SplashManager::createParticle(int i)
 {
-
 	if( (float)rand()/((float)RAND_MAX/100) > 50)
 	{
-		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
+		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2);
 		particles[i].x += 6;
 
-		particles[i].direction[0] = (float)rand()/((float)RAND_MAX/0.006f) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
-		particles[i].direction[1] = -0.001f ; //(float)rand()/((float)RAND_MAX/0.02f) ;
-		particles[i].direction[2] =  0 ;(float)rand()/((float)RAND_MAX/0.2f) - (float)rand()/((float)RAND_MAX/0.2f) ;
-	
+		particles[i].direction[0] = (float)rand()/((float)RAND_MAX/0.006f); 
+		particles[i].direction[1] = -0.001f;
+		particles[i].direction[2] =  0;
 	}
 	else
 	{
-		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
+		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2);
 		particles[i].x -= 6;
 
-		particles[i].direction[0] = -( (float)rand()/((float)RAND_MAX/0.006f)) ; //- (float)rand()/((float)RAND_MAX/0.02f) ;
-		particles[i].direction[1] = -0.001f ; //(float)rand()/((float)RAND_MAX/0.02f) ;
-		particles[i].direction[2] =  0 ;(float)rand()/((float)RAND_MAX/0.2f) - (float)rand()/((float)RAND_MAX/0.2f) ;
-
+		particles[i].direction[0] = -( (float)rand()/((float)RAND_MAX/0.006f));
+		particles[i].direction[1] = -0.001f;
+		particles[i].direction[2] =  0;
 	}
 
 	particles[i].y = 1;
-	particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/20) - (float)rand()/((float)RAND_MAX/20) ;
+	particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/20) - (float)rand()/((float)RAND_MAX/20);
 
 	particles[i].timer = (rand()%100); 
 	particles[i].limit = 1600;
@@ -91,11 +85,10 @@ void SplashManager::createParticle(int i)
 	 particles[i].color[1] = 0;
 	 particles[i].color[2] = 0;
 	 particles[i].color[3] = 1;
-	 particles[i].xAngle =  90 ; 
+	 particles[i].xAngle =  90; 
 	 particles[i].yAngle = 0; 
 	 particles[i].zAngle = 0; 
 }
-
 
 void SplashManager::display(void)
 {
@@ -114,15 +107,12 @@ void SplashManager::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(1 ,1 ,1);
 
-
 	for(int i = 0; i<400 ;i++)
 	{
 		glPushMatrix(); 
 
 		glTranslated(particles[i].x ,particles[i].y ,particles[i].z);
 		glRotatef(particles[i].xAngle, 1.0, 0.0, 0.0);
-		glRotatef(particles[i].yAngle, 0.0, 1.0, 0.0);
-		glRotatef(particles[i].zAngle, 0.0, 0.0, 1.0);
 		glScaled(particles[i].scale ,particles[i].scale ,particles[i].scale);
 
 		glBegin (GL_QUADS);
@@ -143,31 +133,10 @@ void SplashManager::display(void)
 	glEnable(GL_DEPTH_TEST);
 }
 
-
-void SplashManager::reset(int x , int y , int z)
-{
-	emitterX = x;
-	emitterY = y;
-	emitterZ = z;
-
-	for(int i = 0; i<400 ;i++)
-	{
-		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
-		particles[i].y = emitterY ;
-		particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
-		particles[i].scale = 0.3;
-	}
-}
-
-
 void SplashManager::update(void)
 {
 	for(int i = 0; i<400 ;i++)
 	{
-		particles[i].color[0] = 1.0;
-		particles[i].color[1] =  1.0;
-		particles[i].color[2] = 1.0;
-
 		particles[i].timer++;
 
 		if( particles[i].timer < particles[i].limit)
@@ -178,7 +147,6 @@ void SplashManager::update(void)
 			particles[i].y += particles[i].direction[1];
 			particles[i].z += particles[i].direction[2];
 
-			
 			particles[i].scale += 0.001f;
 
 			particles[i].color[0] = (1.0 -perc);
