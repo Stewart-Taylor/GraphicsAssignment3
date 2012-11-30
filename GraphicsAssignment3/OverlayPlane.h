@@ -1,6 +1,5 @@
 #include <freeglut.h>
 
-
 #pragma once
 class OverlayPlane
 {
@@ -10,13 +9,11 @@ public:
 	void display(GLfloat resX , GLfloat resY);
 	void setShader(void);
 private:
-	GLfloat xPosition;
-	GLfloat yPosition;
-	GLfloat zPosition;
+	GLfloat xPosition, yPosition, zPosition;
 	GLfloat scale;
-	GLuint vertexShaderProgram;
+	GLuint shaderProgram;
 	GLuint fragShader;
-	GLint myUniformLocation , myUniformLocation2 , myUniformLocation3;
+	GLint timerUniform , resXUniform, resYUniform;
 	float timer;
 };
 

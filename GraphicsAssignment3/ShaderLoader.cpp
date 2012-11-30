@@ -1,6 +1,14 @@
+/*		Shader Loader CLASS
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * Helper class aids with loading in text files for use in shaders
+ *
+ * Refrence : Share Drive Graphics Week 11 Example
+ * 
+ * Last Updated: 29/11/2012
+*/
+
 #include "ShaderLoader.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,15 +17,12 @@ ShaderLoader::ShaderLoader(void)
 {
 }
 
-
 ShaderLoader::~ShaderLoader(void)
 {
 }
 
-
-char* ShaderLoader::textFileRead(char *fn) {
-
-
+char* ShaderLoader::textFileRead(char *fn)
+{
 	FILE *fp;
 	char *content = NULL;
 
@@ -43,8 +48,8 @@ char* ShaderLoader::textFileRead(char *fn) {
 	return content;
 }
 
-int ShaderLoader::textFileWrite(char *fn, char *s) {
-
+int ShaderLoader::textFileWrite(char *fn, char *s) 
+{
 	FILE *fp;
 	int status = 0;
 
@@ -60,4 +65,3 @@ int ShaderLoader::textFileWrite(char *fn, char *s) {
 	}
 	return(status);
 }
-

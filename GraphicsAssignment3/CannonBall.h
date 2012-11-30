@@ -15,12 +15,8 @@ private:
 	void createSplash();
 	void displaySplash(void);
 	void updateSplash(void);
-	GLfloat xPosition;
-	GLfloat yPosition;
-	GLfloat zPosition;
-	GLfloat xDirection;
-	GLfloat yDirection;
-	GLfloat zDirection;
+	GLfloat xPosition, yPosition, zPosition;
+	GLfloat xDirection, yDirection, zDirection;
 	GLfloat scale;
 	GLuint texName;
 	bool active;
