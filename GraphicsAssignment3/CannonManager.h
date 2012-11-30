@@ -10,6 +10,7 @@ public:
 	void display(void);
 	void update(void);
 	void fire(GLfloat x, GLfloat y , GLfloat z);
+	bool active;
 private:
 	void createParticle(int i);
 	GLuint texName;

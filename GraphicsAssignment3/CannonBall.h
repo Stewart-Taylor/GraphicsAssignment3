@@ -10,6 +10,8 @@ public:
 	void displayShadow(void);
 	void update();
 	void fire(GLfloat x ,GLfloat y, GLfloat z );
+	bool active;
+	bool splashActive;
 private:
 	void createParticle(int i);
 	void createSplash();
@@ -19,7 +21,5 @@ private:
 	GLfloat xDirection, yDirection, zDirection;
 	GLfloat scale;
 	GLuint texName;
-	bool active;
-	bool splashActive;
-	int timer ;
+	int timer;
 };

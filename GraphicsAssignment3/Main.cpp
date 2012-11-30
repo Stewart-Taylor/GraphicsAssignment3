@@ -192,8 +192,11 @@ void overlayToggle()
 
 void fireCannon()
 {
-	cannon.fire(ship.xPosition , ship.yPosition , ship.zPosition);
-	cannonBall.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+	if( (cannonBall.active == false) && ( cannonBall.splashActive == false) && ( cannon.active == false))
+	{
+		cannon.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+		cannonBall.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+	}
 }
 
 void keyboard (unsigned char key, int x, int y)

@@ -45,6 +45,8 @@ CannonBall::CannonBall()
 	yPosition = 0;
 	zPosition = 0;
 	scale = 1.0;
+	active = false;
+	splashActive = false;
 
 	texName = TextureLoader::loadTexture("Textures\\splash.bmp");
 }
@@ -312,7 +314,7 @@ void CannonBall::updateSplash(void)
 	{
 		timer += 1;
 
-		if( timer > 1000)
+		if( timer > 70)
 		{
 			splashActive = false;
 		}

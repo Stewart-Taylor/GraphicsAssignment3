@@ -36,6 +36,7 @@ CannonManager::CannonManager(int x , int y , int z)
 	emitterX = x;
 	emitterY = y;
 	emitterZ = z;
+	active = false;
 
 	for(int i = 0 ; i < 600 ; i++)
 	{
