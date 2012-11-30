@@ -20,9 +20,9 @@ private:
 	GLuint texName;
 	GLfloat scale;
 	GLfloat timer;
-	GLuint vertexShaderProgram;
+	GLuint shaderProgram;
 	GLuint vertexShader;
 	GLuint fragShader;
-	GLint myUniformLocation;
-	GLint myUniformLocationTex;
+	GLint timeUniform;
+	GLint textureUniform;
 };

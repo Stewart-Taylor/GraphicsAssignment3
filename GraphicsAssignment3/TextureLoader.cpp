@@ -24,7 +24,6 @@ TextureLoader::TextureLoader(void)
 {
 }
 
-
 TextureLoader::~TextureLoader(void)
 {
 }
@@ -66,7 +65,6 @@ GLuint TextureLoader::loadTexture(char* Filename)
 
    return id;
 }
-
 
 GLuint TextureLoader::loadTextureClamped(char* Filename)
 {

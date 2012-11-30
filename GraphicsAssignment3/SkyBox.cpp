@@ -1,9 +1,9 @@
 /*		SkyBox Class
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * This class is used as a skybox , Update to support cube mapped textures
+ * This class is used as a skybox , Updated to support cube mapped textures
  *
- * Last Updated: 26/11/2012
+ * Last Updated: 28/11/2012
 */
 
 #include "SkyBox.h"
@@ -23,11 +23,9 @@ SkyBox::SkyBox(void)
 	textureRight= TextureLoader::loadTextureClamped("Textures\\right.bmp");
 }
 
-
 SkyBox::~SkyBox(void)
 {
 }
-
 
 void SkyBox::display(void)
 {
@@ -44,10 +42,10 @@ void SkyBox::display(void)
 
 	glBindTexture(GL_TEXTURE_2D, textureRight);
 	glBegin(GL_POLYGON);
-	glTexCoord2f(1.0, 0.0);	glVertex3f(  0.5, -0.5, -0.5 );      
+	glTexCoord2f(1.0, 0.0);		glVertex3f(  0.5, -0.5, -0.5 );      
 	glTexCoord2f(1.0,  1.0);	glVertex3f(  0.5,  0.5, -0.5 );     
-	glTexCoord2f(0.0,  1.0);   glVertex3f( -0.5,  0.5, -0.5 );      
-	glTexCoord2f(0.0, 0.0);	glVertex3f( -0.5, -0.5, -0.5 );      
+	glTexCoord2f(0.0,  1.0);	glVertex3f( -0.5,  0.5, -0.5 );      
+	glTexCoord2f(0.0, 0.0);		glVertex3f( -0.5, -0.5, -0.5 );      
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, textureMiddle);

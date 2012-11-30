@@ -1,7 +1,7 @@
 /*		Plane CLASS
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * Generates a blue plane with graident and surface normals.
+ * Generates a blue plane with graident and surface normal.
  * 
  * Last Updated: 26/11/2012
 */

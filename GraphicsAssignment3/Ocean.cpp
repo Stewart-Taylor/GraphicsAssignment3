@@ -5,7 +5,7 @@
  * It also simulates the oceans animation
  * This ocean makes extensive use of vertex and fragment shaders
  * 
- * Last Updated: 27/11/2012
+ * Last Updated: 30/11/2012
 */
 
 #include <glew.h>
@@ -68,13 +68,13 @@ void Ocean::setShader()
 	glCompileShader(vertexShader);
 	glCompileShader(fragShader);
 
-	vertexShaderProgram = glCreateProgram();
-	glAttachShader(vertexShaderProgram,vertexShader);
-	glAttachShader(vertexShaderProgram,fragShader);
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram,vertexShader);
+	glAttachShader(shaderProgram,fragShader);
 
-	glLinkProgram(vertexShaderProgram);
-	myUniformLocation = glGetUniformLocation(vertexShaderProgram, "time");
-	myUniformLocationTex = glGetUniformLocation(vertexShaderProgram, "tex");
+	glLinkProgram(shaderProgram);
+	timeUniform = glGetUniformLocation(shaderProgram, "time");
+	textureUniform = glGetUniformLocation(shaderProgram, "tex");
 }
 
 Ocean::~Ocean(void)
@@ -138,14 +138,12 @@ void Ocean::calculateNormals(int size)
 
 void Ocean::display(void)
 {
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-
 	glEnable(GL_TEXTURE_2D); 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
-	glUseProgram(vertexShaderProgram);
-	glUniform1f(myUniformLocation, timer);
+	glUseProgram(shaderProgram);
+	glUniform1f(timeUniform, timer);
 	glUniform1i(texName, 0);
 
 	int size = 161;
@@ -178,8 +176,6 @@ void Ocean::display(void)
 	glUseProgram(0);
 }
 
-
-
 void Ocean::drawVertex(int i , int j)
 {
 	glNormal3fv(&normals[i][j][0]);		glTexCoord2f(0,0);	glVertex3f(cd[i],cd[j],-heightPoints[i][j]);
@@ -188,10 +184,8 @@ void Ocean::drawVertex(int i , int j)
 	glNormal3fv(&normals[i][j+1][0]);	glTexCoord2f(0,1);	glVertex3f(cd[i],cd[j+1],-heightPoints[i][j+1]);
 }
 
-
 void Ocean::update()
 {
 	timer+= 1;
-
-	calculateNormals(161); // MOVE TO VERTEX SHADER
+	calculateNormals(161);
 }

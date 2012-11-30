@@ -5,7 +5,7 @@
  * 
  * Reference: topic_7/shadow.c
  *
- * Last Updated: 24/10/2012
+ * Last Updated: 26/11/2012
 */
 
 #include <freeglut.h>

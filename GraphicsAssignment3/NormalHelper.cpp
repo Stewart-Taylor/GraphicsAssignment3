@@ -8,20 +8,16 @@
 */
 
 #include "NormalHelper.h"
-
 #include <math.h>
 #include <stdlib.h>
-
 
 NormalHelper::NormalHelper(void)
 {
 }
 
-
 NormalHelper::~NormalHelper(void)
 {
 }
-
 
 void NormalHelper::getSurfaceNormal(GLfloat *normalVector,GLfloat vertexA[3],GLfloat vertexB[3],GLfloat vertexC[3])
 {
