@@ -1,20 +1,21 @@
-/*	Graphics Assignment 3
+/*	 Sailing Ship
+ *	Graphics Assignment 3
+ *
  *	AUTHOR: STEWART TAYLOR
- *	DATE STARTED: 24/11/2012
+ *	DATE STARTED: 30/11/2012
  *------------------------------------
  * This program is part of the Graphics modules third assignment.
- * It demonstrates the use of shaders vertex and fragment 
+ * It demonstrates the use of shaders vertex and fragment and all previous knowledge 
  * 
  * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 29/11/2012
+ * Last Updated: 30/11/2012
 */
 
 #include <glew.h>
 #include <freeglut.h>
 #include <fstream>
 #include <iostream>
-
 #include "Camera.h"
 #include "Main.h"
 #include "SkyBox.h"
@@ -54,10 +55,9 @@ GLint myUniformLocation;
 GLint myUniformLocation2;
 GLint myUniformLocation3;
 
-float resX;
-float resY;
+float resX, resY;
 
-bool overlayVisible = false;
+bool overlayVisible = true;
 
 void generateMap()
 {
@@ -72,7 +72,6 @@ void setObjects(void)
 	cannon = CannonManager(0,0,0);
 	cannonBall = CannonBall();
 	overlay = OverlayPlane();
-
 	splashManager = SplashManager(ship.xPosition + 15 , ship.yPosition + 4 , ship.zPosition + 15); 
 	generateMap();
 }
@@ -91,52 +90,12 @@ void init (void)
 }
 
 
-void setShaders() {
-
+void setShaders() 
+{
 	ocean.setShader();
 	overlay.setShader();
 	ship.setShader();
 	ship.CreateVBO();
-	
-/*	char *vs = NULL,*fs = NULL,*fs2 = NULL;
-
-	v = glCreateShader(GL_VERTEX_SHADER);
-	f = glCreateShader(GL_FRAGMENT_SHADER);
-	f2 = glCreateShader(GL_FRAGMENT_SHADER);
-
-
-	vs = ShaderLoader::textFileRead("shaders/toon.vert");
-	fs = ShaderLoader::textFileRead("shaders/toon.frag");
-	fs2 =ShaderLoader::textFileRead("shaders/toon2.frag");
-
-	const char * ff = fs;
-	const char * ff2 = fs2;
-	const char * vv = vs;
-
-	glShaderSource(v, 1, &vv,NULL);
-	glShaderSource(f, 1, &ff,NULL);
-	glShaderSource(f2, 1, &ff2,NULL);
-
-	free(vs);free(fs);
-
-	glCompileShader(v);
-	glCompileShader(f);
-	glCompileShader(f2);
-
-	p = glCreateProgram();
-	glAttachShader(p,f);
-	glAttachShader(p,f2);
-	glAttachShader(p,v);
-
-	glLinkProgram(p);
-	//glUseProgram(p);
-
-
-	 myUniformLocation = glGetUniformLocation(p, "referenceTex");
-	 myUniformLocation2 = glGetUniformLocation(p, "pixelWidth");
-	 myUniformLocation3 = glGetUniformLocation(p, "pixelHeight");
-
-	 */
 }
 
 void drawShadows()
@@ -186,11 +145,7 @@ void display (void)
 	glEnable(GL_CULL_FACE);
 
 	plane.display();
-
-
 	ocean.display();
-
-	
 
 	glDisable(GL_CULL_FACE);
 
@@ -200,8 +155,6 @@ void display (void)
 	cannonBall.display();
 	ship.display();
 	
-
-
 	if(overlayVisible == true)
 	{
 		overlay.display(resX , resY);
@@ -212,10 +165,8 @@ void display (void)
 
 void reshape (int w, int h)
 {
-
-	if( ( w > 400) && ( h > 400)) // Allows min window size
+	if( ( w > 400) && ( h > 400)) // Allows min window size , stops silly resizing
 	{
-
 		glViewport (0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
 		glMatrixMode (GL_PROJECTION); //set the matrix to projection
 		glLoadIdentity ();
@@ -223,11 +174,9 @@ void reshape (int w, int h)
 		glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 
 		resX = w;
-		resY = w;
-
+		resY = h;
 	}
 }
-
 
 void overlayToggle()
 {
@@ -240,7 +189,6 @@ void overlayToggle()
 		overlayVisible = true;
 	}
 }
-
 
 void fireCannon()
 {
@@ -265,7 +213,6 @@ void keyboard (unsigned char key, int x, int y)
 	{
 		overlayToggle();
 	}
-
 
 	if (key=='h')
 	{
@@ -293,7 +240,7 @@ void idle(void)
 
 void printInfo()
 {
-	std::cout << "	ASeS 3" << std::endl << std::endl;
+	std::cout << "	Sailing Ship - Graphics Assignment 3" << std::endl << std::endl;
 	std::cout << "	Created by Stewart Taylor" << std::endl << std::endl;
 	std::cout << "-------------------------------------" << std::endl;
 	std::cout << "CONTROLS" << std::endl;
@@ -304,8 +251,9 @@ void printInfo()
 	std::cout << " R,F - Move Camera Up/Down " << std::endl;
 	std::cout << " Z,X - Tilt Camera Up/Down" << std::endl;
 	std::cout << std::endl;
-	std::cout << "LIGHT " << std::endl;
-	std::cout << " U,I,K,L,J - Move Light Source" << std::endl;
+	std::cout << "Other" << std::endl;
+	std::cout << " G - Enable Overlay Effect" << std::endl;
+	std::cout << " H - Fire Cannon" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -316,7 +264,7 @@ int main (int argc, char **argv)
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (600, 600); 
     glutInitWindowPosition (200, 100);
-    glutCreateWindow ("3D Procedural Volcanic Island"); 
+    glutCreateWindow ("3D Sailing Ship"); 
     init (); 
     glutDisplayFunc (display); 
     glutIdleFunc (idle); 
@@ -331,6 +279,6 @@ int main (int argc, char **argv)
 		exit(1);
 	}
 	setShaders(); 
-	glutMainLoop (); 
+	glutMainLoop(); 
     return 0;
 }

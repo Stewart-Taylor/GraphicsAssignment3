@@ -31,7 +31,6 @@ GLfloat lastX;
 GLfloat lastY;
 
 
-
 Camera::Camera(void)
 {
 
@@ -41,7 +40,6 @@ Camera::~Camera(void)
 {
 }
 
-
 void Camera::update()
 {
 	glTranslatef(0.0f, 0.0f, -radius);
@@ -50,7 +48,6 @@ void Camera::update()
     glRotatef(yRotation,0.0,1.0,0.0);  
     glTranslated(-xPosition,-yPosition,-zPosition); 
 }
-
 
 void Camera::keyboardControl(unsigned char key, int x, int y) 
 {

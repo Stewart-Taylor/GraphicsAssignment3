@@ -14,9 +14,7 @@ public:
 private:
 	void calculateNormals(int size);
 	void drawVertex(int x , int y);
-	GLfloat xPosition;
-	GLfloat yPosition;
-	GLfloat zPosition;
+	GLfloat xPosition, yPosition, zPosition;
 	GLuint texName;
 	GLfloat scale;
 	GLfloat timer;
