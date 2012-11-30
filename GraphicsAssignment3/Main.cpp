@@ -153,7 +153,7 @@ void drawShadows()
 	ShadowHelper::shadow_matrix(light_position,plane_eq,shadow_proj);
 	glMultMatrixf(shadow_proj);
 
-	ship.DrawShadow();
+	ship.displayShadow();
 	cannonBall.displayShadow();
 
 	glPopMatrix();
@@ -198,7 +198,7 @@ void display (void)
 	splashManager.display();
 	cannon.display();
 	cannonBall.display();
-	ship.Draw();
+	ship.display();
 	
 
 

@@ -8,25 +8,24 @@ class Ship
 	public:
 		Ship(char* filename);
 		~Ship();
-		void Draw();
+		void display();
 		void CreateVBO();
 		void update(void);
 		GLfloat xPosition, yPosition, zPosition;
-		void DrawRef();
-		void DrawShadow();
+		void displayShadow();
 		void setShader(void);
 	private:
-		void GetFaces();
+		void getFaces();
 		unsigned int m_TotalFaces;
 		Lib3dsFile * m_model;
 		GLuint m_VertexVBO, m_NormalVBO, m_TexCoordVBO;
-		GLuint texName , texName2;
+		GLuint texName, texName2;
 		GLfloat xAngle, yAngle, zAngle;
 		GLfloat scale;
 		GLfloat timer;
-		GLuint vertexShaderProgram;
+		GLuint shaderProgram;
 		GLuint fragShader;
-		GLint myUniformLocation;
-		GLint myUniformLocation2;
+		GLint timeUniform;
+		GLint textureUniform;
 };
 

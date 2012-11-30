@@ -4,9 +4,12 @@
  * This class loads in a 3ds model
  * It loads in vertex data and texture coords
  * It uses the lib3ds library to calculate normals for the model
- * It also simulates the oceans animation
+ * It also simulates the ships movement in an ocean environment
+ *
+ * Reference for model loading : Lib3ds tutorial: My first model , http://www.donkerdump.nl/node/207 , only covers vertex loading
+ * Required additon of texture capabilty as tutorial only covers loading of vertexes
  * 
- * Last Updated: 27/11/2012
+ * Last Updated: 30/11/2012
  */
 
 #include <glew.h>
@@ -17,7 +20,6 @@
 #include <string>
 #include <cstring>
 #include <cassert>
-
 #include "Ship.h"
 #include "TextureLoader.h"
 #include "ShaderLoader.h"
@@ -46,19 +48,12 @@ Ship::~Ship()
 	
 }
 
-
-
 void Ship::setShader(void)
 {
 	char *vs = NULL,*fs = NULL,*fs2 = NULL;
-
 	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-
 	fs = ShaderLoader::textFileRead("Shaders/water.frag");
-
-
 	const char * ff = fs;
-
 	glShaderSource(fragShader, 1, &ff,NULL);
 
 	free(vs);
@@ -66,26 +61,25 @@ void Ship::setShader(void)
 
 	glCompileShader(fragShader);
 
-	vertexShaderProgram = glCreateProgram();
-	glAttachShader(vertexShaderProgram,fragShader);
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram,fragShader);
 
-	glLinkProgram(vertexShaderProgram);
-	myUniformLocation = glGetUniformLocation(vertexShaderProgram, "timer");
-	myUniformLocation2= glGetUniformLocation(vertexShaderProgram, "tex");
+	glLinkProgram(shaderProgram);
+	timeUniform = glGetUniformLocation(shaderProgram, "timer");
+	textureUniform= glGetUniformLocation(shaderProgram, "tex");
 }
 
 void Ship::CreateVBO()
 {
 	assert(m_model != NULL);
 	
-	GetFaces(); // get faces count
+	getFaces(); // get faces count
 	
 	// Allocate memory for our vertices and normals
 	Lib3dsVector * vertices = new Lib3dsVector[m_TotalFaces * 3];
 	Lib3dsVector * normals = new Lib3dsVector[m_TotalFaces * 3];
 	Lib3dsTexel* texCoords = new Lib3dsTexel[m_TotalFaces * 3];
 	
-
 	Lib3dsMesh * mesh;
 	unsigned int FinishedFaces = 0;
 
@@ -98,7 +92,7 @@ void Ship::CreateVBO()
 			Lib3dsFace * face = &mesh->faceL[cur_face];
 			for(unsigned int i = 0;i < 3;i++)
 			{
-				if(mesh->texels)
+				if(mesh->texels) 
 				{
 					memcpy(&texCoords[FinishedFaces*3 + i], mesh->texelL[face->points[ i ]], sizeof(Lib3dsTexel)); 
 				}
@@ -132,7 +126,7 @@ void Ship::CreateVBO()
 }
 
 // Counts the total number of faces this model has
-void Ship::GetFaces()
+void Ship::getFaces()
 {
 	assert(m_model != NULL);
 	
@@ -145,19 +139,14 @@ void Ship::GetFaces()
 	}
 }
 
-
-void Ship::Draw() 
+void Ship::display() 
 {
-
-
-//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glColor3f( 1.0 ,1.0, 1.0 ); 
 	glEnable(GL_LIGHTING);
 	glPushMatrix(); 
 
 	glEnable(GL_TEXTURE_2D); 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glTranslated(xPosition ,yPosition ,zPosition);
@@ -183,7 +172,7 @@ void Ship::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	// Render the triangles
+	//Render the triangles
 	glDrawArrays(GL_TRIANGLES, 0, m_TotalFaces * 3);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -193,79 +182,11 @@ void Ship::Draw()
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
 
-
-
-
-void Ship::DrawRef() 
+void Ship::displayShadow() //Projected Method
 {
-
-	glUseProgram(vertexShaderProgram);
-	glUniform1f(myUniformLocation, timer);
-	glUniform1i(texName2, 0);
-
-
-		glEnable(GL_BLEND);
-//	glBlendFunc(GL_ONE, GL_ONE);
-
-//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-	glColor4f(0.7,0.7,1.0,0.1);	
-//	glEnable(GL_LIGHTING);
-	glPushMatrix(); 
-
-	glEnable(GL_TEXTURE_2D); 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	glBindTexture(GL_TEXTURE_2D, texName);
-
-	glTranslated(xPosition ,yPosition ,zPosition);
-	glRotatef(180, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(180, 0.0, 0.0, 1.0);
-	glTranslated(0,0 ,0);
-	glScaled(scale ,scale ,scale);
-
-	assert(m_TotalFaces != 0);
-	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
-	
-	// Bind Buffers
-	glBindBuffer(GL_ARRAY_BUFFER, m_NormalVBO);
-	glNormalPointer(GL_FLOAT, 0, NULL);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, m_TexCoordVBO);    
-    glTexCoordPointer(2, GL_FLOAT, 0, NULL); 
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VertexVBO);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	// Render the triangles
-	glDrawArrays(GL_TRIANGLES, 0, m_TotalFaces * 3);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
-
-	glPopMatrix();
-
-	glDisable(GL_TEXTURE_2D);
-
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-
-	glUseProgram(0);
-}
-
-
-
-void Ship::DrawShadow() 
-{
-//	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glColor4f(0.1,0.1,0.1,0.1);	
-//	glEnable(GL_LIGHTING);
 	glPushMatrix(); 
 
 	glEnable(GL_TEXTURE_2D); 
@@ -306,16 +227,15 @@ void Ship::DrawShadow()
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
-
 
 void Ship::update(void) 
 {
 	timer += 0.0001f;
 
-	yPosition =   -(0.5 *sin(timer * 100));
-	xAngle =  -90 - (2 *sin(timer * 100));
-	zAngle =  (2 *sin(timer * 100));
+	//Ship Movement
+	yPosition =  -(0.5 *sin(timer * 100));
+	xAngle = -90 - (2 *sin(timer * 100)); //Ship rocking
+	zAngle = (2 *sin(timer * 100));
 	zPosition += 0.03f;
 }

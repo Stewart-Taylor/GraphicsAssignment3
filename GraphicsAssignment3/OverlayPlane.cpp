@@ -1,9 +1,10 @@
 /*		OverlayPlane CLASS
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * Generates a blue plane with graident and surface normals.
+ * Generates a plane in which to provide overlay effects
+ * Uses fragment shader to enable this
  * 
- * Last Updated: 26/11/2012
+ * Last Updated: 30/11/2012
 */
 
 #include <glew.h>
