@@ -1,31 +1,29 @@
+/*		Water Fragment Shader
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This fragment shader is applied to the Ship reflection
+ * It genereates a moving watery like effect
+ * Requires adjustment to fit with camera movement
+ *
+ * Last Updated: 28/11/2012
+*/
 uniform float timer;
-
-
 uniform sampler2D tex;
- float PI = 3.1415926535897932;
+const float PI = 3.141;
+const float speed = 0.2;
+const float speed_x = 0.3;
+const float speed_y = 0.3;
+const float intensity = 3.;
+const int steps = 8;
+const float frequency = 4.0;
+const int angle = 7; 
+const float delta = 20.;
+const float intence = 400.;
+const float emboss = 0.3;
 
-//speed
- float speed = 0.2;
- float speed_x = 0.3;
- float speed_y = 0.3;
-
-// geometry
- float intensity = 3.;
- int steps = 8;
- float frequency = 4.0;
- int angle = 7; // better when a prime
-
-// reflection and emboss
- float delta = 20.;
- float intence = 400.;
- float emboss = 0.3;
-
-//---------- crystals effect
-
-  float col(vec2 coord)
-  {
+float col(vec2 coord)
+{
 	float time = timer * 20.0;
-  
   
     float delta_theta = 2.0 * PI / float(angle);
     float col = 0.0;
@@ -38,30 +36,25 @@ uniform sampler2D tex;
       adjc.y -= sin(theta)*time*speed - time * speed_y;
       col = col + cos( (adjc.x*cos(theta) - adjc.y*sin(theta))*frequency)*intensity;
     }
-
     return cos(col);
-  }
-
-//---------- main
+}
 
 void main(void)
 {
-vec2 p = (gl_FragCoord.xy) , c1 = p, c2 = p;
-float cc1 = col(c1);
+	vec2 p = (gl_FragCoord.xy) , c1 = p, c2 = p;
+	float cc1 = col(c1);
 
-//c2.x += 1/delta;
-float dx = emboss*(cc1-col(c2))/delta;
+	float dx = emboss*(cc1-col(c2))/delta;
 
-c2.x = p.x;
-//c2.y += 1/delta;
-float dy = emboss*(cc1-col(c2))/delta;
+	c2.x = p.x;
+	float dy = emboss*(cc1-col(c2))/delta;
 
-c1.x += dx;
-c1.y = -(c1.y+dy);
+	c1.x += dx;
+	c1.y = -(c1.y+dy);
 
-float alpha = 1.+dot(dx,dy)*intence;
+	float alpha = 1.+dot(dx,dy)*intence;
 
-vec4 col  = texture2D(tex,c1)*(alpha);
-col[3] = 0.1;
-gl_FragColor = col;
+	vec4 col  = texture2D(tex,c1)*(alpha);
+	col[3] = 0.1;
+	gl_FragColor = col;
 }
