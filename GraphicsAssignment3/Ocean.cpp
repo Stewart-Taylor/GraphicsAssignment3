@@ -34,6 +34,7 @@ Ocean::Ocean(int size)
 	zPosition = -400;
 	scale = 5;
 	timer = 0;
+	amplitude = 0.2f;
 
 	for (int x = 0; x <= size; x++)
 	{
@@ -75,6 +76,7 @@ void Ocean::setShader()
 	glLinkProgram(shaderProgram);
 	timeUniform = glGetUniformLocation(shaderProgram, "time");
 	textureUniform = glGetUniformLocation(shaderProgram, "tex");
+	amplitudeUniform = glGetUniformLocation(shaderProgram, "amp");
 }
 
 Ocean::~Ocean(void)
@@ -82,8 +84,8 @@ Ocean::~Ocean(void)
 
 }
 
-
-void Ocean::genMap(int mapSize)
+// Produces random height Noise to give to the Ocean
+void Ocean::genMap(int mapSize) 
 {	
 	srand(time(0));
 	int random_seed = rand();
@@ -144,6 +146,7 @@ void Ocean::display(void)
 
 	glUseProgram(shaderProgram);
 	glUniform1f(timeUniform, timer);
+	glUniform1f(amplitudeUniform, amplitude);
 	glUniform1i(texName, 0);
 
 	int size = 161;
@@ -188,4 +191,21 @@ void Ocean::update()
 {
 	timer+= 1;
 	calculateNormals(161);
+}
+
+void Ocean::adjustAmplitude(GLfloat amount)
+{
+	if (( amount > 0 ) && ( amplitude < 0.7))
+	{
+		amplitude += amount;
+	}
+	else if (( amount < 0 ) && ( amplitude > -0.0))
+	{
+		amplitude += amount;
+	}
+}
+
+GLfloat Ocean::getAmplitude(void)
+{
+	return amplitude;
 }

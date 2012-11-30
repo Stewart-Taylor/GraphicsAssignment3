@@ -11,6 +11,8 @@ public:
 	void genMap(int size);
 	void update();
 	void setShader(void);
+	void adjustAmplitude(GLfloat amount);
+	GLfloat getAmplitude(void);
 private:
 	void calculateNormals(int size);
 	void drawVertex(int x , int y);
@@ -23,4 +25,6 @@ private:
 	GLuint fragShader;
 	GLint timeUniform;
 	GLint textureUniform;
+	GLint amplitudeUniform;
+	GLfloat amplitude;
 };

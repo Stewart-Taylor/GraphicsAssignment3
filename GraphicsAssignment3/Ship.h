@@ -10,7 +10,7 @@ class Ship
 		~Ship();
 		void display();
 		void CreateVBO();
-		void update(void);
+		void update(GLfloat oceanAmplitude);
 		GLfloat xPosition, yPosition, zPosition;
 		void displayShadow();
 		void setShader(void);

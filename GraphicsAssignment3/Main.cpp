@@ -221,6 +221,17 @@ void keyboard (unsigned char key, int x, int y)
 	{
 		fireCannon();
 	}
+
+
+	if (key=='m')
+	{
+		ocean.adjustAmplitude(0.01f);
+	}
+
+	if (key=='n')
+	{
+		ocean.adjustAmplitude(-0.01f);
+	}
 }
 
 void mouseUpdate(int x , int y)
@@ -231,7 +242,7 @@ void mouseUpdate(int x , int y)
 void idle(void)
 {
 	ocean.update();
-	ship.update();
+	ship.update(ocean.getAmplitude());
 	splashManager.emitterX = ship.xPosition + 15;
 	splashManager.emitterY = ship.yPosition + 4;
 	splashManager.emitterZ = ship.zPosition + 15;

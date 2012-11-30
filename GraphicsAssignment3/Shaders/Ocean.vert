@@ -9,6 +9,7 @@
  * Last Updated: 30/11/2012
 */
 
+uniform float amp;
 uniform float time;
 varying vec3 lightDir,normal;
 
@@ -28,7 +29,7 @@ void main()
     float val1 = 3.4 * sin(position.y+ timer);
 	float val2 = 4.6 * sin(position.x+ (timer));
 	float val3 = 2.9 * sin(position.z+ (timer/2.0));
-    position.z = (val1 + val2  + val3) * 0.2;
+    position.z = (val1 + val2  + val3) * amp;
 
    gl_Position = gl_ModelViewProjectionMatrix * position;
 } 

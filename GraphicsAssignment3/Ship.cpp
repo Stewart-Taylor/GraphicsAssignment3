@@ -7,6 +7,7 @@
  * It also simulates the ships movement in an ocean environment
  *
  * Reference for model loading : Lib3ds tutorial: My first model , http://www.donkerdump.nl/node/207 , only covers vertex loading
+ * Normals are caluclated through lib3ds library
  * Required additon of texture capabilty as tutorial only covers loading of vertexes
  * 
  * Last Updated: 30/11/2012
@@ -229,13 +230,18 @@ void Ship::displayShadow() //Projected Method
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Ship::update(void) 
+void Ship::update(GLfloat oceanAmplitude) 
 {
 	timer += 0.0001f;
 
 	//Ship Movement
-	yPosition =  -(0.5 *sin(timer * 100));
-	xAngle = -90 - (2 *sin(timer * 100)); //Ship rocking
-	zAngle = (2 *sin(timer * 100));
+	yPosition =  -( (0.5 + oceanAmplitude)  *sin(timer * 100));
+	xAngle = -90 - ((2 + oceanAmplitude)  *sin(timer * 100)) * -sin(timer * 100) ; //Ship rocking
+	zAngle = ((2 + oceanAmplitude) *sin(timer * 100)) * -sin(timer * 100);
 	zPosition += 0.03f;
+
+	if( zPosition > 315) // Resets it , stops it going through skybox and to the scary  world beyond
+	{
+		zPosition = -40;
+	}
 }
