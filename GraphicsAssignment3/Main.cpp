@@ -27,6 +27,7 @@
 #include "ShadowHelper.h"
 #include "OverlayPlane.h"
 #include "CannonManager.h"
+#include "CannonBall.h"
 
 Camera camera = Camera();
 
@@ -37,6 +38,7 @@ Ship ship = Ship("Models/Galleon.3ds");
 SplashManager splashManager;
 OverlayPlane overlay;
 CannonManager cannon;
+CannonBall cannonBall;
 
 GLuint v,f,f2,p;
 
@@ -68,6 +70,7 @@ void setObjects(void)
 	plane = Plane();
 	ocean = Ocean(161);
 	cannon = CannonManager(0,0,0);
+	cannonBall = CannonBall();
 	overlay = OverlayPlane();
 
 	splashManager = SplashManager(ship.xPosition + 15 , ship.yPosition + 4 , ship.zPosition + 15); 
@@ -150,16 +153,8 @@ void drawShadows()
 	ShadowHelper::shadow_matrix(light_position,plane_eq,shadow_proj);
 	glMultMatrixf(shadow_proj);
 
-	
-//	ship.DrawRef();
 	ship.DrawShadow();
-	//uranusPole.displayShadow();  
-	//saturnPole.displayShadow();
-	//jupiterPole.displayShadow();
-	//marsPole.displayShadow();
-	//earthPole.displayShadow();
-	//venusPole.displayShadow();
-	//mercuryPole.displayShadow();
+	cannonBall.displayShadow();
 
 	glPopMatrix();
 
@@ -202,7 +197,9 @@ void display (void)
 	drawShadows();
 	splashManager.display();
 	cannon.display();
+	cannonBall.display();
 	ship.Draw();
+	
 
 
 	if(overlayVisible == true)
@@ -244,6 +241,13 @@ void overlayToggle()
 	}
 }
 
+
+void fireCannon()
+{
+	cannon.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+	cannonBall.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+}
+
 void keyboard (unsigned char key, int x, int y)
 {
 	key = tolower(key); // Allows Caps Lock to still work
@@ -265,7 +269,7 @@ void keyboard (unsigned char key, int x, int y)
 
 	if (key=='h')
 	{
-		cannon.fire(ship.xPosition , ship.yPosition , ship.zPosition);
+		fireCannon();
 	}
 }
 
@@ -283,6 +287,7 @@ void idle(void)
 	splashManager.emitterZ = ship.zPosition + 15;
 	splashManager.update();
 	cannon.update();
+	cannonBall.update();
 	glutPostRedisplay();
 }
 

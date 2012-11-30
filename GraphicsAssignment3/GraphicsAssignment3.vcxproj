@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CannonBall.h" />
     <ClInclude Include="CannonManager.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
@@ -94,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CannonBall.cpp" />
     <ClCompile Include="CannonManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />

@@ -26,7 +26,7 @@ struct Particle
 };
 
 
-Particle smokeParticles[1000];
+Particle smokeParticles[600];
 
 CannonManager::CannonManager(void)
 {
@@ -39,7 +39,7 @@ CannonManager::CannonManager(int x , int y , int z)
 	emitterY = y;
 	emitterZ = z;
 
-	for(int i = 0 ; i < 1000 ; i++)
+	for(int i = 0 ; i < 600 ; i++)
 	{
 		createParticle(i);
 		smokeParticles[i].timer =9999;
@@ -62,7 +62,7 @@ void  CannonManager::fire(GLfloat x , GLfloat y , GLfloat z)
 	emitterZ = z + 10;
 
 
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<600 ;i++)
 	{
 		createParticle(i);
 	//	smokeParticles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
@@ -112,7 +112,7 @@ void CannonManager::display(void)
 	glScaled(1.0 ,1.0  ,1.0 );
 
 
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<600 ;i++)
 	{
 		if( smokeParticles[i].timer < smokeParticles[i].limit)
 		{
@@ -147,7 +147,7 @@ void CannonManager::reset(int x , int y , int z)
 	emitterY = y;
 	emitterZ = z;
 
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<600 ;i++)
 	{
 		smokeParticles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		smokeParticles[i].y = emitterY ;
@@ -159,7 +159,7 @@ void CannonManager::reset(int x , int y , int z)
 
 void CannonManager::update(void)
 {
-	for(int i = 0; i<1000 ;i++)
+	for(int i = 0; i<600 ;i++)
 	{
 		smokeParticles[i].timer++;
 
